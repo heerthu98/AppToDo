@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Todo App</title>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.1/css/bootstrap.min.css" />
+</head>
+
+<body>
+    <div class="container my-5">
+        <h1 class="text-center">Todo App</h1>
+        <div class="card">
+            <div class="card-header">
+                <form class="row g-3" id="addTaskForm">
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="newTaskInput" placeholder="Enter new task" />
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" id="add-button" class="btn btn-primary w-100">
+                            Add
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-body" id="taskList">
+
+                <p class="text-muted text-center" id="noTasksMessage">
+                    No tasks to display
+                </p>
+            </div>
+            <div class="card-footer text-muted">
+                <p class="mb-0">
+                    Total tasks: <span id="totalTasksCount">0</span>
+                </p>
+                <p class="mb-0">
+                    Completed tasks: <span id="completedTasksCount">0</span>
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="Script.js"></script>
+</body>
+
+</html>
