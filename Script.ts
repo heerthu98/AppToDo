@@ -1,5 +1,3 @@
-// import findIndex from "array-findindex";
-
 class Task {
   id: number;
   name: string;
