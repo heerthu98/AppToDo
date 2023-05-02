@@ -11,7 +11,6 @@ class Task {
     this.completed = false;
   }
 }
-
 class TodoApp {
   private tasks: Task[] = [];
 
@@ -36,7 +35,7 @@ class TodoApp {
   private addTaskHandler(event: Event) {
     event.preventDefault();
 
-    // Get the task name from the input field
+    // It retrieves the value of the new element and stores it in taskName.
     const taskName = this.newTaskInput.value;
 
     if (!taskName) {
@@ -44,7 +43,14 @@ class TodoApp {
       return;
     }
 
-    // Create a new task
+    // Check if a task with the same name already exists
+    const existingTask = this.tasks.find((task) => task.name === taskName);
+
+    if (existingTask) {
+      alert("A task with the same name already exists");
+      return; //.
+    }
+    // Create a new task and object push to the task array
     const task = new Task(taskName);
 
     // Add the task to the task list
@@ -55,8 +61,10 @@ class TodoApp {
   }
 
   private taskListHandler(event: MouseEvent) {
+    // Identifies the clicked element using
     const target = event.target as HTMLElement;
 
+    //checks  clicked element has a certain class name
     if (target.classList.contains("delete-task")) {
       // Find the task by its ID and remove it from the list
       const taskId = Number(target.dataset.taskId);
@@ -66,7 +74,7 @@ class TodoApp {
       // Update the UI
       this.updateUI();
     } else if (target.classList.contains("edit-task")) {
-      // Find the task by its ID and update its name
+      // Find the task by its ID and update its task name
       const taskId = Number(target.dataset.taskId);
       const taskIndex = this.tasks.findIndex((task) => task.id === taskId);
 
@@ -116,30 +124,32 @@ class TodoApp {
     // Clear the task list
     this.taskList.innerHTML = "";
 
-    // Add each task to the task list
-    this.tasks.forEach((task) => {
+    // Create an array of task elements using map()
+    const taskElements = this.tasks.map((task) => {
       const taskItem = document.createElement("div");
       taskItem.innerHTML = `
-      <div class="input-group mb-3 ">
-        <div class="input-group-text justify-content-between align-items-center w-100  ">
-          <input type="checkbox" class="complete-task me-2" ${
-            task.completed ? "checked" : ""
-          } data-task-id="${task.id}">
-          <input type="text" class="form-control me-4" value="${
-            task.name
-          }" disabled>
-          <button type="button" class="btn btn-secondary edit-task me-2" data-task-id="${
-            task.id
-          }">Edit</button>
-          <button type="button" class="btn btn-danger delete-task me-2" data-task-id="${
-            task.id
-          }">Delete</button>
+        <div class="input-group mb-3 ">
+          <div class="input-group-text justify-content-between align-items-center w-100  ">
+            <input type="checkbox" class="complete-task me-2" ${
+              task.completed ? "checked" : ""
+            } data-task-id="${task.id}">
+            <input type="text" class="form-control me-4" value="${
+              task.name
+            }" disabled>
+            <button type="button" class="btn btn-secondary edit-task me-2" data-task-id="${
+              task.id
+            }">Edit</button>
+            <button type="button" class="btn btn-danger delete-task me-2" data-task-id="${
+              task.id
+            }">Delete</button>
+          </div>
         </div>
-      </div>
-    `;
-
-      this.taskList.appendChild(taskItem);
+      `;
+      return taskItem;
     });
+
+    // Append the task elements to the task list
+    this.taskList.append(...taskElements);
 
     // Update the task count
     this.totalTasksCount.textContent = this.tasks.length.toString();
@@ -149,6 +159,5 @@ class TodoApp {
     this.completedTasksCount.textContent = completedTasksCount.toString();
   }
 }
-
-// Instantiate the app
+// Instantiate the app and stored in the app variable
 const app = new TodoApp();
